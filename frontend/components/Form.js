@@ -12,7 +12,7 @@ export function Form(props) {
 
   const onSubmit = evt => {
     evt.preventDefault()
-    props.postAnswer(props.newFalseAnswer)
+    props.postAnswer(props.form)
   }
 
 

@@ -48,14 +48,14 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer() {
+export function postAnswer(answerData) {
   return function (dispatch) {
-    dispatch(selectAnswer())
-    axios.post('http://localhost:9000/api/quiz/answer')
+    axios.post('http://localhost:9000/api/quiz/answer', answerData)
     .then(resp => {
       console.log('post resp', resp.data.message)
       //Dispatch an action to set the server message to state
-      dispatch(selectAnswer(resp.data.message))
+      dispatch(setMessage(resp.data.message))
+      dispatch(selectAnswer())
       //Dispatch the fetching of the next quiz
       dispatch(fetchQuiz())
     })
@@ -68,11 +68,12 @@ export function postAnswer() {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz() {
+export function postQuiz(quizData) {
   return function (dispatch) {
-    axios.post('http://localhost:9000/api/quiz/new')
+    axios.post('http://localhost:9000/api/quiz/new', quizData)
       .then(resp => {
         console.log('post quiz res', resp.data)
+        dispatch(setMessage(resp.data.message))
         dispatch(resetForm())
       })
       .catch(err => {
