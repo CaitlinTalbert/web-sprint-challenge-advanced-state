@@ -12,7 +12,10 @@ export function Form(props) {
 
   const onSubmit = evt => {
     evt.preventDefault()
-    props.postAnswer(props.form)
+    props.postQuiz(props.form)
+  }
+
+  const maxLength = {
   }
 
 
@@ -22,7 +25,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={maxLength >= 50}>Submit new quiz</button>
     </form>
   )
 }

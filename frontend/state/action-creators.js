@@ -53,10 +53,12 @@ export function postAnswer(answerData) {
     axios.post('http://localhost:9000/api/quiz/answer', answerData)
     .then(resp => {
       console.log('post resp', resp.data.message)
+
       //Dispatch an action to set the server message to state
       dispatch(setMessage(resp.data.message))
       dispatch(selectAnswer())
       //Dispatch the fetching of the next quiz
+      dispatch(setQuiz())
       dispatch(fetchQuiz())
     })
     .catch(err => {

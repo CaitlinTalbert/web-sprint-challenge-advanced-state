@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'; 
-import { fetchQuiz, postAnswer, selectAnswer } from '../state/action-creators'; 
+import { fetchQuiz, inputChange, postAnswer, selectAnswer } from '../state/action-creators'; 
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -36,7 +36,7 @@ export default function Quiz() {
             <div id="quizAnswers">
               <div className="answer selected">
                 A function
-                <button onClick={selectClick}>SELECTED</button>
+                <button onClick={selectClick} disabled={!selectedAnswer}>SELECTED</button>
               </div>
 
               <div className="answer">
