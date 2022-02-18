@@ -4,20 +4,31 @@ import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
 
+  const {
+    newQuestion,
+    newTrueAnswer,
+    newFalseAnswer,
+  } = props; 
+
   const onChange = evt => {
-    console.log(props)
     const { id, value } = evt.target
     props.inputChange(id, value)
   }
 
   const onSubmit = evt => {
     evt.preventDefault()
-    props.postQuiz(props.form)
+    props.postQuiz({
+      question_text: props.form.newQuestion, 
+      true_answer_text: props.form.newTrueAnswer, 
+      false_answer_text: props.form.newFalseAnswer
+    })
   }
 
-  const maxLength = {
-  }
-
+  //The "Submit new quiz" button in the form stays disabled until **all** inputs have values such that `value.trim().length > 0`
+  const enabledButton = 
+    props.form.newQuestion.trim().length > 0 &&
+    props.form.newTrueAnswer.trim().length > 0 &&
+    props.form.newFalseAnswer.trim().length > 0
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -25,7 +36,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn" disabled={maxLength >= 50}>Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={!enabledButton}>Submit new quiz</button>
     </form>
   )
 }
