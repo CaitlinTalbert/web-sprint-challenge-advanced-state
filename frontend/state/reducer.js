@@ -26,7 +26,7 @@ const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch (action.type) {
     case types.SET_SELECTED_ANSWER: 
-      return [...state, action.payload]
+      return action.payload
   }
   return state
 }
@@ -35,7 +35,7 @@ const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case types.SET_INFO_MESSAGE: 
-      return [...state, action.payload]
+      return action.payload
   }
   return state
 }

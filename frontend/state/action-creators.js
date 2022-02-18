@@ -3,9 +3,13 @@ import * as actions from './action-types';
 import axios from 'axios';
 
 
-export function moveClockwise() { }
+export function moveClockwise() {
+  return { type: actions.MOVE_CLOCKWISE}
+ }
 
-export function moveCounterClockwise() { }
+export function moveCounterClockwise() { 
+  return { type: actions.MOVE_COUNTERCLOCKWISE}
+}
 
 export function selectAnswer() { }
 

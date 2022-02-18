@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'; 
+import { fetchQuiz, postAnswer, selectAnswer } from '../state/action-creators'; 
 
 export default function Quiz(props) {
+  
   return (
     <div id="wrapper">
       {
