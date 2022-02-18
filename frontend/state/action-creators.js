@@ -11,8 +11,8 @@ export function moveCounterClockwise() {
   return { type: actions.MOVE_COUNTERCLOCKWISE}
 }
 
-export function selectAnswer() { 
-  return { type: actions.SET_SELECTED_ANSWER}
+export function selectAnswer(answerId=null) { 
+  return { type: actions.SET_SELECTED_ANSWER, payload: answerId}
 }
 
 export function setMessage() {
@@ -23,8 +23,8 @@ export function setQuiz(payload) {
   return { type: actions.SET_QUIZ_INTO_STATE, payload}
  }
 
-export function inputChange () {
-  return { type: actions.INPUT_CHANGE}
+export function inputChange (questionData) {
+  return { type: actions.RESET_FORM}
 }
 
 export function resetForm() { 
@@ -60,7 +60,7 @@ export function postAnswer() {
       dispatch(fetchQuiz())
     })
     .catch(err => {
-      console.log(err)
+      console.log({err})
     })
     // On successful POST:
     // - Dispatch an action to reset the selected answer state

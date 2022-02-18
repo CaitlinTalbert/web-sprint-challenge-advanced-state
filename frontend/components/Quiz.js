@@ -5,15 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function Quiz() {
   const state = useSelector((appState) => appState.quiz)
-  const selectedAnswer = useSelector((appState) => appState.selectAnswer)
+  const selectedAnswer = useSelector((appState) => appState.selectedAnswer)
   const dispatcher = useDispatch()
-
-
-
 
   const submitClick = (e) => {
   e.preventDefault()
-  }
+  const answer = {quizId: state.quizId, answerId: selectedAnswer}
+  dispatcher(postAnswer(answer))
+}
 
   const answerSubmit = (e, answerId) => { 
     e.preventDefault()
@@ -23,6 +22,11 @@ export default function Quiz() {
   useEffect(() => {
     dispatcher(fetchQuiz())
   }, [])
+
+  const selectClick = (e) => {
+    e.preventDefault(); 
+
+  }
 
   return (
     <div id="wrapper">
@@ -35,9 +39,7 @@ export default function Quiz() {
             <div id="quizAnswers">
               <div className="answer selected">
                 A function
-                <button>
-                  SELECTED
-                </button>
+                <button onClick={selectClick}>SELECTED</button>
               </div>
 
               <div className="answer">
