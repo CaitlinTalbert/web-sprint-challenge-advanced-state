@@ -1,15 +1,36 @@
 import React, { useEffect } from 'react'; 
 import { fetchQuiz, postAnswer, selectAnswer } from '../state/action-creators'; 
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Quiz(props) {
-  
+
+export default function Quiz() {
+  const state = useSelector((appState) => appState.quiz)
+  const selectedAnswer = useSelector((appState) => appState.selectAnswer)
+  const dispatcher = useDispatch()
+
+
+
+
+  const submitClick = (e) => {
+  e.preventDefault()
+  }
+
+  const answerSubmit = (e, answerId) => { 
+    e.preventDefault()
+    dispatcher(selectedAnswer(answerId))
+  }
+
+  useEffect(() => {
+    dispatcher(fetchQuiz())
+  }, [])
+
   return (
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        state ? (
           <>
-            <h2>What is a closure?</h2>
+            <h2>{state.question}</h2>
 
             <div id="quizAnswers">
               <div className="answer selected">
@@ -27,7 +48,7 @@ export default function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" onClick={submitClick} disabled={answerSubmit}>Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
