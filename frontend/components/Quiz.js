@@ -1,42 +1,43 @@
 import React, { useEffect } from 'react'; 
-import { fetchQuiz, inputChange, postAnswer, selectAnswer } from '../state/action-creators'; 
-import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../state/action-creators'; 
+import { connect } from 'react-redux';
 
 
-export default function Quiz() {
-  const state = useSelector((appState) => appState.quiz)
-  const selectedAnswer = useSelector((appState) => appState.selectedAnswer)
-  const dispatcher = useDispatch()
+export function Quiz(props) {
 
-  const submitClick = (e) => {
-  e.preventDefault()
-  const answer = {quizId: state.quizId, answerId: selectedAnswer}
-  dispatcher(postAnswer(answer))
-}
+    const {
+      quiz, 
+      postAnswer
+    } = props; 
+
+
+    const selectClick = () => {
+      props.selectAnswer(props.quiz.answers[0].answer_id)
+    }
+
+    useEffect(() => {
+      props.fetchQuiz()
+    }, [])
+
+    const submitClick = (e) => {
+      e.preventDefault(); 
+      postAnswer({ quiz_id: props.quiz.quiz_id, answer_id: props.quiz.answers[0][1].answer_id})
+    }
 
   
-
-  useEffect(() => {
-    dispatcher(fetchQuiz())
-  }, [])
-
-  const selectClick = (e) => {
-    e.preventDefault(); 
-
-  }
 
   return (
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        state ? (
+        quiz ? (
           <>
-            <h2>{state.question}</h2>
+            <h2>{quiz.question}</h2>
 
             <div id="quizAnswers">
               <div className="answer selected">
                 A function
-                <button onClick={selectClick} disabled={!selectedAnswer}>SELECTED</button>
+                <button onClick={selectClick}>SELECTED</button>
               </div>
 
               <div className="answer">
@@ -47,10 +48,13 @@ export default function Quiz() {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onClick={submitClick} disabled={!selectedAnswer}>Submit answer</button>
+            <button id="submitAnswerBtn" onClick={submitClick} >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
     </div>
   )
 }
+
+
+export default connect (state => state, actionCreators)(Quiz)

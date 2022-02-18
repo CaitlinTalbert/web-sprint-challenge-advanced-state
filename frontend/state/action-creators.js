@@ -11,30 +11,29 @@ export function moveCounterClockwise() {
   return { type: actions.MOVE_COUNTERCLOCKWISE}
 }
 
-export function selectAnswer(answerId=null) { 
-  return { type: actions.SET_SELECTED_ANSWER, payload: answerId}
+export function selectAnswer(value) { 
+  return { type: actions.SET_SELECTED_ANSWER, payload: value}
 }
 
-export function setMessage() {
-  return { type: actions.SET_INFO_MESSAGE}
+export function setMessage(message) {
+  return { type: actions.SET_INFO_MESSAGE, payload: message}
  }
 
-export function setQuiz(payload) {
-  return { type: actions.SET_QUIZ_INTO_STATE, payload}
+export function setQuiz(question_text) {
+  return { type: actions.SET_QUIZ_INTO_STATE, question_text}
  }
 
-export function inputChange (questionData) {
-  return { type: actions.RESET_FORM}
+export function inputChange (value) {
+  return { type: actions.RESET_FORM, payload: value}
 }
 
 export function resetForm() { 
-return { type: actions.RESET_FORM}
+return { type: actions.RESET_FORM, payload: {}}
 }
 
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
-    dispatch(setQuiz())
     axios.get('http://localhost:9000/api/quiz/next')
     .then(resp => {
       console.log('get resp', resp)
@@ -48,9 +47,9 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer(answerData) {
+export function postAnswer(answer_id, quiz_id) {
   return function (dispatch) {
-    axios.post('http://localhost:9000/api/quiz/answer', answerData)
+    axios.post('http://localhost:9000/api/quiz/answer', answer_id, quiz_id)
     .then(resp => {
       console.log('post resp', resp.data.message)
 
@@ -72,11 +71,11 @@ export function postAnswer(answerData) {
 }
 export function postQuiz(quizData) {
   return function (dispatch) {
-    axios.post('http://localhost:9000/api/quiz/new', quizData)
+    axios.post('http://localhost:9000/api/quiz/new', {quizData})
       .then(resp => {
         console.log('post quiz res', resp.data)
         dispatch(setMessage(resp.data.message))
-        dispatch(resetForm())
+        dispatch(resetForm)
       })
       .catch(err => {
         console.log('post quiz err', err)
