@@ -14,10 +14,7 @@ export default function Quiz() {
   dispatcher(postAnswer(answer))
 }
 
-  const answerSubmit = (e, answerId) => { 
-    e.preventDefault()
-    dispatcher(selectedAnswer(answerId))
-  }
+  
 
   useEffect(() => {
     dispatcher(fetchQuiz())
@@ -50,7 +47,7 @@ export default function Quiz() {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onClick={submitClick} disabled={answerSubmit}>Submit answer</button>
+            <button id="submitAnswerBtn" onClick={submitClick} disabled={!selectedAnswer}>Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
