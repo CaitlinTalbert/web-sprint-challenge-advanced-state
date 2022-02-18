@@ -24,7 +24,8 @@ export function Quiz(props) {
       postAnswer({ quiz_id: props.quiz.quiz_id, answer_id: props.quiz.answers[0][1].answer_id})
     }
 
-  
+    //The "Submit answer" button in the quiz stays disabled until **an answer is selected**.
+   
 
   return (
     <div id="wrapper">
@@ -48,7 +49,7 @@ export function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" onClick={submitClick} >Submit answer</button>
+            <button id="submitAnswerBtn" onClick={submitClick} disabled={!postAnswer}>Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
