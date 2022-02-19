@@ -1,25 +1,30 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import {moveClockwise, moveCounterClockwise} from '../state/action-creators'; 
+import { connect } from 'react-redux';
+import * as actionCreators from '../state/action-creators';
 
-export default function Wheel(props) {
-const dispatch = useDispatch();
 
-  const counterClick = () => {
-    console.log("click"); 
-    dispatch(moveCounterClockwise())
+export function Wheel(props) {
+const {moveClockwise, moveCounterClockwise} = props;
 
-  }
+const handleClockwise = (e) => {
+  const {value} = e.target
+  moveClockwise(value);
+  console.log(props)
+}
 
-  const clockwiseClick = () => {
-    console.log("clockwise click")
-    dispatch(moveClockwise())
-  }
+const handleCounter = () => {
 
+}
+  
   return (
+    //either active or not active 
+    // ? action || 
+    // interpolate each line
+    //props is wheel 
+    //{`${props.wheel === 0 ? "cog active" : "cog"}`} style={{ "--i": 0 }}>{props.wheel === 0 ? "B" : ""}
     <div id="wrapper">
       <div id="wheel">
-        <div className="cog active" style={{ "--i": 0 }}>B</div>
+        <div className= {`${props.wheel === 0 ? "cog active" : "cog"}`} style={{ "--i": 0 }}>{props.wheel === 0 ? "B" : ""}</div>
         <div className="cog" style={{ "--i": 1 }}></div>
         <div className="cog" style={{ "--i": 2 }}></div>
         <div className="cog" style={{ "--i": 3 }}></div>
@@ -27,9 +32,11 @@ const dispatch = useDispatch();
         <div className="cog" style={{ "--i": 5 }}></div>{/* --i is a custom CSS property, no need to touch that nor the style object */}
       </div>
       <div id="keypad">
-        <button id="counterClockwiseBtn" onClick={counterClick}>Counter clockwise</button>
-        <button id="clockwiseBtn" onClick={clockwiseClick}>Clockwise</button>
+        <button id="counterClockwiseBtn" onClick={handleCounter}>Counter clockwise</button>
+        <button id="clockwiseBtn" onClick={handleClockwise}>Clockwise</button>
       </div>
     </div>
   )
 }
+
+export default connect(st => st, actionCreators)(Wheel);

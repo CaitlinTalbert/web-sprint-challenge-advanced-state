@@ -2,33 +2,35 @@
 import * as actions from './action-types'; 
 import axios from 'axios';
 
-
-export function moveClockwise() {
-  return { type: actions.MOVE_CLOCKWISE}
+// wheel widget actions 
+export function moveClockwise(value) {
+  return { type: actions.MOVE_CLOCKWISE, payload: value }
  }
 
 export function moveCounterClockwise() { 
-  return { type: actions.MOVE_COUNTERCLOCKWISE}
+  return { type: actions.MOVE_COUNTERCLOCKWISE }
 }
 
+//quiz
 export function selectAnswer(value) { 
-  return { type: actions.SET_SELECTED_ANSWER, payload: value}
+  return { type: actions.SET_SELECTED_ANSWER, payload: value }
 }
 
+//form
 export function setMessage(message) {
-  return { type: actions.SET_INFO_MESSAGE, payload: message}
+  return { type: actions.SET_INFO_MESSAGE, payload: message }
  }
 
 export function setQuiz(question_text) {
-  return { type: actions.SET_QUIZ_INTO_STATE, question_text}
+  return { type: actions.SET_QUIZ_INTO_STATE, question_text }
  }
 
 export function inputChange (value) {
-  return { type: actions.RESET_FORM, payload: value}
+  return { type: actions.RESET_FORM, payload: value }
 }
 
 export function resetForm() { 
-return { type: actions.RESET_FORM, payload: {}}
+return { type: actions.RESET_FORM }
 }
 
 // ❗ Async action creators
@@ -36,7 +38,7 @@ export function fetchQuiz() {
   return function (dispatch) {
     axios.get('http://localhost:9000/api/quiz/next')
     .then(resp => {
-      console.log('get resp', resp)
+      console.log('get resp', resp.data)
       dispatch(setQuiz(resp.data))
     })
     .catch(err => {
@@ -55,9 +57,9 @@ export function postAnswer(answer_id, quiz_id) {
 
       //Dispatch an action to set the server message to state
       dispatch(setMessage(resp.data.message))
-      dispatch(selectAnswer())
+      dispatch(selectAnswer(null))
       //Dispatch the fetching of the next quiz
-      dispatch(setQuiz())
+      dispatch(setQuiz(null))
       dispatch(fetchQuiz())
     })
     .catch(err => {
@@ -69,13 +71,13 @@ export function postAnswer(answer_id, quiz_id) {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz(quizData) {
+export function postQuiz(quizData, correctAnswer, newFalseAnswer) {
   return function (dispatch) {
-    axios.post('http://localhost:9000/api/quiz/new', {quizData})
+    axios.post('http://localhost:9000/api/quiz/new', quizData, correctAnswer, newFalseAnswer)
       .then(resp => {
         console.log('post quiz res', resp.data)
-        dispatch(setMessage(resp.data.message))
-        dispatch(resetForm)
+        dispatch(setMessage(`You got a correct answer: ${resp.data.message}`))
+        dispatch(resetForm())
       })
       .catch(err => {
         console.log('post quiz err', err)
