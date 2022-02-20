@@ -7,11 +7,20 @@ export function Wheel(props) {
 
   const handleClockwise = (e) => {
     const { value } = e.target;
-    moveClockwise(value);
+    if (props.wheel >= 0 && props.wheel <= 4) {
+      moveClockwise(value);
+    } else {
+      this.counter === 0;
+    }
+
     console.log(props);
   };
 
-  const handleCounter = () => {};
+  const handleCounter = (e) => {
+    const { value } = e.target;
+    moveCounterClockwise(value);
+    console.log(props);
+  };
 
   return (
     //either active or not active
