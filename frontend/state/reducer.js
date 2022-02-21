@@ -18,10 +18,17 @@ function wheel(state = initialWheelState, action) {
         };
       }
     case types.MOVE_COUNTERCLOCKWISE:
-      return {
-        ...state,
-        counter: state.counter - 1,
-      };
+      if (state.counter >= 1) {
+        return {
+          ...state,
+          counter: state.counter - 1,
+        };
+      } else {
+        return {
+          ...state,
+          counter: 5,
+        };
+      }
     default:
       return state;
   }
