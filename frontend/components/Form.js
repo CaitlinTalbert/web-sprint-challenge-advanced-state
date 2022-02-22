@@ -20,9 +20,9 @@ export function Form(props) {
 
   //The "Submit new quiz" button in the form stays disabled until **all** inputs have values such that `value.trim().length > 0`
   const enabledButton =
-    props.form.newQuestion.trim().length > 1 &&
-    props.form.newTrueAnswer.trim().length > 1 &&
-    props.form.newFalseAnswer.trim().length > 1;
+    props.form.newQuestion.trim().length > 0 &&
+    props.form.newTrueAnswer.trim().length > 0 &&
+    props.form.newFalseAnswer.trim().length > 0;
 
   return (
     <form id="form" onSubmit={onSubmit}>
