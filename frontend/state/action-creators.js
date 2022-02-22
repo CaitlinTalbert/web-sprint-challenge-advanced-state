@@ -12,17 +12,17 @@ export function moveCounterClockwise() {
 }
 
 //quiz
-export function selectAnswer(answer_id) {
-  return { type: actions.SET_SELECTED_ANSWER, payload: answer_id };
+export function selectAnswer(answerId) {
+  return { type: actions.SET_SELECTED_ANSWER, payload: answerId };
 }
 
 //form
-export function setMessage(message) {
-  return { type: actions.SET_INFO_MESSAGE, payload: message };
+export function setMessage(value) {
+  return { type: actions.SET_INFO_MESSAGE, payload: value };
 }
 
-export function setQuiz(question_text) {
-  return { type: actions.SET_QUIZ_INTO_STATE, question_text };
+export function setQuiz(question) {
+  return { type: actions.SET_QUIZ_INTO_STATE, question };
 }
 
 export function inputChange(value) {
