@@ -92,7 +92,9 @@ export function postQuiz({
       })
       .then((resp) => {
         console.log("post quiz res", resp.data);
-        dispatch(setMessage(`You got a correct answer: ${resp.data.message}`));
+        dispatch(
+          setMessage(`Congrats: "${resp.data.question}" is a great question!`)
+        );
         dispatch(resetForm());
       })
       .catch((err) => {
