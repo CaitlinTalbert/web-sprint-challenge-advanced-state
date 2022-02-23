@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 export function Quiz(props) {
   const { quiz } = props;
 
-  const selectClick = (id) => {
-    props.selectAnswer(id);
+  const selectClick = (answer_id) => {
+    props.selectAnswer(answer_id);
   };
 
   useEffect(() => {

@@ -26,7 +26,7 @@ export function setQuiz(question) {
 }
 
 export function inputChange(value) {
-  return { type: actions.RESET_FORM, payload: value };
+  return { type: actions.INPUT_CHANGE, payload: value };
 }
 
 export function resetForm() {
@@ -50,10 +50,10 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   };
 }
-export function postAnswer(answer_id, quiz_id) {
+export function postAnswer({ quiz_id, answer_id }) {
   return function (dispatch) {
     axios
-      .post("http://localhost:9000/api/quiz/answer", answer_id, quiz_id)
+      .post("http://localhost:9000/api/quiz/answer", { quiz_id, answer_id })
       .then((resp) => {
         console.log("post resp", resp.data.message);
 
@@ -73,15 +73,18 @@ export function postAnswer(answer_id, quiz_id) {
     // - Dispatch the fetching of the next quiz
   };
 }
-export function postQuiz(quizData, correctAnswer, newFalseAnswer) {
+export function postQuiz({
+  question_text,
+  true_answer_text,
+  false_answer_text,
+}) {
   return function (dispatch) {
     axios
-      .post(
-        "http://localhost:9000/api/quiz/new",
-        quizData,
-        correctAnswer,
-        newFalseAnswer
-      )
+      .post("http://localhost:9000/api/quiz/new", {
+        question_text,
+        true_answer_text,
+        false_answer_text,
+      })
       .then((resp) => {
         console.log("post quiz res", resp.data);
         dispatch(setMessage(`You got a correct answer: ${resp.data.message}`));

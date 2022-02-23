@@ -53,8 +53,10 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch (action.type) {
     case types.SET_SELECTED_ANSWER:
       return action.payload;
+
+    default:
+      return state;
   }
-  return state;
 }
 
 const initialMessageState = "";
@@ -62,8 +64,10 @@ function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case types.SET_INFO_MESSAGE:
       return action.payload;
+
+    default:
+      return state;
   }
-  return state;
 }
 
 const initialFormState = {
