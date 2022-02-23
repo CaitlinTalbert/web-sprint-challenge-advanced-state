@@ -12,6 +12,7 @@ export function Quiz(props) {
 
   const selectClick = (answer_id) => {
     props.selectAnswer(answer_id);
+    console.log(answer_id);
   };
 
   useEffect(() => {
@@ -22,11 +23,9 @@ export function Quiz(props) {
     e.preventDefault();
     props.postAnswer({
       quiz_id: props.quiz.quiz_id,
-      answer_id: props.selectAnswer,
+      answer_id: props.selectedAnswer,
     });
   };
-
-  //The "Submit answer" button in the quiz stays disabled until **an answer is selected**.
 
   return (
     <div id="wrapper">
@@ -77,32 +76,6 @@ export function Quiz(props) {
     </div>
   );
 }
-//   return (
-//     <div id="wrapper">
-//       {
-//         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-//         quiz ? (
-//           <>
-//             <h2>What is a closure?</h2>
-//             <div id="quizAnswers">
-//               <div className="answer selected">
-//                 A function
-//                 <button>SELECTED</button>
-//               </div>
-//               <div className="answer">
-//                 An elephant
-//                 <button>Select</button>
-//               </div>
-//             </div>
-//             <button id="submitAnswerBtn">Submit answer</button>
-//           </>
-//         ) : (
-//           "Loading next quiz..."
-//         )
-//       }
-//     </div>
-//   );
-// }
 
 const mapStateToProps = (state) => {
   return {
@@ -116,33 +89,3 @@ export default connect(mapStateToProps, {
   postAnswer,
   setMessage,
 })(Quiz);
-
-/** 
-<div className="answer selected">
-A function
-<button onClick={selectClick}>SELECTED</button>
-</div>
-
-<div className="answer">
-An elephant
-<button>Select</button>
-</div>
-</div>
-<button
-              id="submitAnswerBtn"
-              onClick={submitClick}
-              disabled={!postAnswer}
-            >
-              Submit answer
-            </button>
-          </>
-        ) : (
-          "Loading next quiz..."
-        )
-      }
-    </div>
-  );
-}
-
-export default connect((state) => state, selectAnswer)(Quiz);
-*/

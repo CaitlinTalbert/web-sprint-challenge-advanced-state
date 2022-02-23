@@ -39,7 +39,7 @@ export function fetchQuiz() {
     axios
       .get("http://localhost:9000/api/quiz/next")
       .then((resp) => {
-        console.log("get resp", resp.data);
+        //console.log("get resp", resp.data);
         dispatch(setQuiz(resp.data));
       })
       .catch((err) => {
@@ -51,15 +51,20 @@ export function fetchQuiz() {
   };
 }
 export function postAnswer({ quiz_id, answer_id }) {
+  //console.log(body);
+  // const obj = {
+  //   quiz_id: body.quiz_id,
+  // };
+  // console.log(obj);
   return function (dispatch) {
     axios
       .post("http://localhost:9000/api/quiz/answer", { quiz_id, answer_id })
       .then((resp) => {
-        console.log("post resp", resp.data.message);
+        //console.log("post resp", resp.data.message);
 
         //Dispatch an action to set the server message to state
         dispatch(setMessage(resp.data.message));
-        dispatch(selectAnswer(null));
+        dispatch(selectAnswer(answer_id));
         //Dispatch the fetching of the next quiz
         dispatch(setQuiz(null));
         dispatch(fetchQuiz());
