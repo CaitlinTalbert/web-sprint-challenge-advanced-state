@@ -22,7 +22,7 @@ export function setMessage(value) {
 }
 
 export function setQuiz(question) {
-  return { type: actions.SET_QUIZ_INTO_STATE, question };
+  return { type: actions.SET_QUIZ_INTO_STATE, payload: question };
 }
 
 export function inputChange(value) {

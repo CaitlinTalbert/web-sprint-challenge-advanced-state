@@ -28,81 +28,81 @@ export function Quiz(props) {
 
   //The "Submit answer" button in the quiz stays disabled until **an answer is selected**.
 
-  //   return (
-  //     <div id="wrapper">
-  //       {quiz ? (
-  //         <>
-  //           <h2>{quiz.question}</h2>
-  //           <div id="quizAnswers">
-  //             <div
-  //               className={`${
-  //                 props.selectedAnswer == quiz.answers[0].answer_id
-  //                   ? "answer selected"
-  //                   : "answer"
-  //               }`}
-  //             >
-  //               {quiz.answers[0].text}
-  //               <button onClick={() => selectClick(quiz.answers[0].answer_id)}>
-  //                 {props.selectedAnswer === quiz.answers[0].answer_id
-  //                   ? "SELECTED"
-  //                   : "Select"}
-  //               </button>
-  //             </div>
-  //             <div
-  //               className={`${
-  //                 props.selectedAnswer == quiz.answers[1].answer_id
-  //                   ? "answer selected"
-  //                   : "answer"
-  //               }`}
-  //             >
-  //               {quiz.answers[1].text}
-  //               <button onClick={() => selectClick(quiz.answers[1].answer_id)}>
-  //                 {props.selectedAnswer == quiz.answers[1].answer_id
-  //                   ? "SELECTED"
-  //                   : "Select"}
-  //               </button>
-  //             </div>
-  //           </div>
-  //           <button
-  //             disabled={!props.selectedAnswer}
-  //             onClick={submitClick}
-  //             id="submitAnswerBtn"
-  //           >
-  //             Submit answer
-  //           </button>
-  //         </>
-  //       ) : (
-  //         "Loading next quiz..."
-  //       )}
-  //     </div>
-  //   );
-  // }
   return (
     <div id="wrapper">
-      {
-        // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        quiz ? (
-          <>
-            <h2>What is a closure?</h2>
-            <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>SELECTED</button>
-              </div>
-              <div className="answer">
-                An elephant
-                <button>Select</button>
-              </div>
+      {quiz ? (
+        <>
+          <h2>{quiz.question}</h2>
+          <div id="quizAnswers">
+            <div
+              className={`${
+                props.selectedAnswer == quiz.answers[0].answer_id
+                  ? "answer selected"
+                  : "answer"
+              }`}
+            >
+              {quiz.answers[0].text}
+              <button onClick={() => selectClick(quiz.answers[0].answer_id)}>
+                {props.selectedAnswer === quiz.answers[0].answer_id
+                  ? "SELECTED"
+                  : "Select"}
+              </button>
             </div>
-            <button id="submitAnswerBtn">Submit answer</button>
-          </>
-        ) : (
-          "Loading next quiz..."
-        )
-      }
+            <div
+              className={`${
+                props.selectedAnswer == quiz.answers[1].answer_id
+                  ? "answer selected"
+                  : "answer"
+              }`}
+            >
+              {quiz.answers[1].text}
+              <button onClick={() => selectClick(quiz.answers[1].answer_id)}>
+                {props.selectedAnswer == quiz.answers[1].answer_id
+                  ? "SELECTED"
+                  : "Select"}
+              </button>
+            </div>
+          </div>
+          <button
+            disabled={!props.selectedAnswer}
+            onClick={submitClick}
+            id="submitAnswerBtn"
+          >
+            Submit answer
+          </button>
+        </>
+      ) : (
+        "Loading next quiz..."
+      )}
     </div>
   );
 }
+//   return (
+//     <div id="wrapper">
+//       {
+//         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
+//         quiz ? (
+//           <>
+//             <h2>What is a closure?</h2>
+//             <div id="quizAnswers">
+//               <div className="answer selected">
+//                 A function
+//                 <button>SELECTED</button>
+//               </div>
+//               <div className="answer">
+//                 An elephant
+//                 <button>Select</button>
+//               </div>
+//             </div>
+//             <button id="submitAnswerBtn">Submit answer</button>
+//           </>
+//         ) : (
+//           "Loading next quiz..."
+//         )
+//       }
+//     </div>
+//   );
+// }
 
 const mapStateToProps = (state) => {
   return {
