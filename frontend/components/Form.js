@@ -3,14 +3,21 @@ import { connect } from "react-redux";
 import * as actionCreators from "../state/action-creators";
 
 export function Form(props) {
+  const { inputChange, form } = props;
+
   const onChange = (evt) => {
-    props.inputChange({
-      [evt.target.id]: evt.target.value,
-    });
+    const { value, id } = evt.target;
+    const newQuestion = {
+      ...form,
+      [id]: value,
+    };
+    inputChange(newQuestion);
+    console.log(newQuestion);
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
+
     props.postQuiz({
       question_text: props.form.newQuestion,
       true_answer_text: props.form.newTrueAnswer,
