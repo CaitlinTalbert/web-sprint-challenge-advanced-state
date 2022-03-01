@@ -3,41 +3,29 @@ import { connect } from "react-redux";
 import * as actionCreators from "../state/action-creators";
 
 export function Form(props) {
-  const { inputChange, form, postQuiz } = props;
-
   const onChange = (evt) => {
+    evt.preventDefault();
     const { value, id } = evt.target;
-    const newQuestion = {
-      ...form,
-      [id]: value,
-    };
-    inputChange(newQuestion);
-    console.log(newQuestion);
+    props.inputChange({ [id]: value });
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    const questionInput = document.querySelector("#newQuestion");
-    const trueAnswerInput = document.querySelector("#newTrueAnswer");
-    const falseAnswerInput = document.querySelector("#newFalseAnswer");
-
-    questionInput.value = "";
-    trueAnswerInput.value = "";
-    falseAnswerInput.value = "";
-
-    postQuiz({
+    const newQuestion = {
       question_text: props.form.newQuestion,
       true_answer_text: props.form.newTrueAnswer,
       false_answer_text: props.form.newFalseAnswer,
-    });
-    props.resetForm();
+    };
+    props.postQuiz(newQuestion);
   };
 
-  //The "Submit new quiz" button in the form stays disabled until **all** inputs have values such that `value.trim().length > 0`
-  const enabledButton =
-    props.form.newQuestion.trim().length > 0 &&
-    props.form.newTrueAnswer.trim().length > 0 &&
-    props.form.newFalseAnswer.trim().length > 0;
+  const enabledButton = () => {
+    return (
+      props.form.newQuestion.trim().length < 1 ||
+      props.form.newTrueAnswer.trim().length < 1 ||
+      props.form.newFalseAnswer.trim().length < 1
+    );
+  };
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -45,32 +33,29 @@ export function Form(props) {
       <input
         maxLength={50}
         onChange={onChange}
+        value={props.form.newQuestion}
         id="newQuestion"
         placeholder="Enter question"
       />
       <input
         maxLength={50}
         onChange={onChange}
+        value={props.form.newTrueAnswer}
         id="newTrueAnswer"
         placeholder="Enter true answer"
       />
       <input
         maxLength={50}
         onChange={onChange}
+        value={props.form.newFalseAnswer}
         id="newFalseAnswer"
         placeholder="Enter false answer"
       />
-      <button id="submitNewQuizBtn" disabled={!enabledButton}>
-        Submit new quiz
+      <button id="submitNewQuizBtn" disabled={enabledButton()}>
+        Submit new quiz{enabledButton()}
       </button>
     </form>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    form: state.form,
-  };
-};
-
-export default connect(mapStateToProps, actionCreators)(Form);
+export default connect((st) => st, actionCreators)(Form);

@@ -82,10 +82,7 @@ function form(state = initialFormState, action) {
       return { ...state, ...action.payload };
     case types.RESET_FORM:
       return {
-        ...state,
-        newQuestion: "",
-        newFalseAnswer: "",
-        newTrueAnswer: "",
+        ...initialFormState,
       };
     default:
       return state;
