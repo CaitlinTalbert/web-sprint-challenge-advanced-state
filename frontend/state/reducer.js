@@ -81,9 +81,15 @@ function form(state = initialFormState, action) {
     case types.INPUT_CHANGE:
       return { ...state, ...action.payload };
     case types.RESET_FORM:
-      return { ...state, initialFormState };
+      return {
+        ...state,
+        newQuestion: "",
+        newFalseAnswer: "",
+        newTrueAnswer: "",
+      };
+    default:
+      return state;
   }
-  return state;
 }
 
 export default combineReducers({

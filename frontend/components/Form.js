@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../state/action-creators";
 
 export function Form(props) {
-  const { inputChange, form } = props;
+  const { inputChange, form, postQuiz } = props;
 
   const onChange = (evt) => {
     const { value, id } = evt.target;
@@ -17,12 +17,20 @@ export function Form(props) {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
+    const questionInput = document.querySelector("#newQuestion");
+    const trueAnswerInput = document.querySelector("#newTrueAnswer");
+    const falseAnswerInput = document.querySelector("#newFalseAnswer");
 
-    props.postQuiz({
+    questionInput.value = "";
+    trueAnswerInput.value = "";
+    falseAnswerInput.value = "";
+
+    postQuiz({
       question_text: props.form.newQuestion,
       true_answer_text: props.form.newTrueAnswer,
       false_answer_text: props.form.newFalseAnswer,
     });
+    props.resetForm();
   };
 
   //The "Submit new quiz" button in the form stays disabled until **all** inputs have values such that `value.trim().length > 0`
@@ -59,4 +67,10 @@ export function Form(props) {
   );
 }
 
-export default connect((st) => st, actionCreators)(Form);
+const mapStateToProps = (state) => {
+  return {
+    form: state.form,
+  };
+};
+
+export default connect(mapStateToProps, actionCreators)(Form);
